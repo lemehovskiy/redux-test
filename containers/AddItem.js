@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addEvent} from '../actions'
+import {addItem} from '../actions'
 
-const AddEvent = ({dispatch}) => {
+const AddItem = ({dispatch}) => {
     let input
 
     return (
@@ -13,7 +13,7 @@ const AddEvent = ({dispatch}) => {
                   if (!input.value.trim()) {
                     return
                   }
-                  dispatch(addEvent(input.value))
+                  dispatch(addItem(input.value))
                   input.value = ''
                 }}
             >
@@ -26,4 +26,4 @@ const AddEvent = ({dispatch}) => {
     )
 }
 
-export default connect()(AddEvent)
+export default connect()(AddItem)

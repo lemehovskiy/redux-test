@@ -1,6 +1,7 @@
-let nextTodoId = 0
-export const addEvent = text => ({
-    type: 'ADD_EVENT',
+let nextTodoId = 2;
+
+export const addItem = title => ({
+    type: 'ADD_ITEM',
     id: nextTodoId++,
-    text
+    title
 })

@@ -4,8 +4,8 @@
   "description": "Redux counter example",
   "scripts": {
     "start": "node server.js",
-    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
-    "test:watch": "npm test -- --watch"
+    "dev": "NODE_ENV=development webpack",
+    "build": "NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
+    "autoprefixer": "^9.2.1",
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",
     "babel-plugin-add-module-exports": "^0.1.1",
@@ -36,15 +37,22 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-0": "^6.3.13",
+    "css-loader": "^1.0.0",
     "expect": "^1.6.0",
     "express": "^4.13.3",
+    "extract-text-webpack-plugin": "^3.0.2",
     "jsdom": "^5.6.1",
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
+    "node-sass": "^4.9.4",
+    "postcss-loader": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
     "react-transform-hmr": "^1.0.0",
     "redux-immutable-state-invariant": "^1.1.1",
-    "webpack": "^1.13.1",
+    "resolve-url-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0"
   }

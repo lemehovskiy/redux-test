@@ -18,12 +18,15 @@
 
 import React from 'react'
 import Counter from '../containers/Counter';
-import AddEvent from '../containers/AddEvent';
+import AddItem from '../containers/AddItem';
+import VisibleItemsList from '../containers/VisibleItemsList';
+require('../src/sass/style.scss');
 
 const App = () => (
     <div>
-      <Counter/>
-      <AddEvent/>
+        <Counter/>
+        <AddItem/>
+        <VisibleItemsList/>
     </div>
 )
 
