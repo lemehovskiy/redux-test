@@ -6,6 +6,7 @@
     padding: 8px 10px;
     width: 100%;
     max-width: 200px;
+    border: 1px solid #bdbdbd;
   }
 
   label {
@@ -14,5 +15,13 @@
     align-items: center;
     max-width: 400px;
     padding: 10px 0 0;
+  }
+
+  button {
+    background: #f7f7f7;
+    padding: 10px 20px;
+    border: 2px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 14px;
   }
 }
