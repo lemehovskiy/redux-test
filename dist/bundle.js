@@ -25349,7 +25349,7 @@ var DeletePostModal = function DeletePostModal(_ref) {
             'button',
             { onClick: function onClick() {
                     dispatch((0, _actions.hideModal)());
-                    dispatch((0, _actions.removeItem)(postId)).then(function () {});
+                    dispatch((0, _actions.removeItem)(postId));
                 } },
             'Yes'
         ),

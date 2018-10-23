@@ -7,10 +7,8 @@ const DeletePostModal = ({postId, dispatch}) => (
     <div>
         <p>Delete post {postId}?</p>
         <button onClick={() => {
-                dispatch(hideModal())
-              dispatch(removeItem(postId)).then(() => {
-                
-              })
+                dispatch(hideModal());
+                dispatch(removeItem(postId));
             }}>
             Yes
         </button>
