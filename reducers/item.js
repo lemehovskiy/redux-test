@@ -9,6 +9,9 @@ export default function itemsList(state = [], action) {
                     storeName: action.storeName
                 }
             ]
+
+        case 'REMOVE_ITEM':
+            return state.filter(itemsList => itemsList.id !== action.id);
         default:
             return state;
     }

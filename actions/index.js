@@ -6,3 +6,9 @@ export const addItem = (title, storeName) => ({
     title,
     storeName
 })
+
+
+export const toggleRemove = (id) => ({
+    type: 'REMOVE_ITEM',
+    id: id
+})

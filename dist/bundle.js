@@ -24587,6 +24587,13 @@ var addItem = exports.addItem = function addItem(title, storeName) {
     };
 };
 
+var toggleRemove = exports.toggleRemove = function toggleRemove(id) {
+    return {
+        type: 'REMOVE_ITEM',
+        id: id
+    };
+};
+
 /***/ }),
 /* 232 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -24604,6 +24611,8 @@ var _ItemsList = __webpack_require__(253);
 
 var _ItemsList2 = _interopRequireDefault(_ItemsList);
 
+var _actions = __webpack_require__(231);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -24612,7 +24621,15 @@ var mapStateToProps = function mapStateToProps(state) {
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(_ItemsList2.default);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        toggleRemove: function toggleRemove(id) {
+            return dispatch((0, _actions.toggleRemove)(id));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ItemsList2.default);
 
 /***/ }),
 /* 233 */,
@@ -24633,7 +24650,8 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Item = function Item(_ref) {
-    var title = _ref.title,
+    var onClickRemove = _ref.onClickRemove,
+        title = _ref.title,
         storeName = _ref.storeName;
     return _react2.default.createElement(
         "li",
@@ -24649,6 +24667,15 @@ var Item = function Item(_ref) {
             { className: "store-name" },
             "Store name: ",
             storeName
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "controls" },
+            _react2.default.createElement(
+                "button",
+                { onClick: onClickRemove },
+                "Remove"
+            )
         )
     );
 };
@@ -25036,6 +25063,11 @@ function itemsList() {
                 title: action.title,
                 storeName: action.storeName
             }]);
+
+        case 'REMOVE_ITEM':
+            return state.filter(function (itemsList) {
+                return itemsList.id !== action.id;
+            });
         default:
             return state;
     }
@@ -25150,14 +25182,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 __webpack_require__(254);
 
 var ItemsList = function ItemsList(_ref) {
-    var itemsList = _ref.itemsList;
+    var itemsList = _ref.itemsList,
+        toggleRemove = _ref.toggleRemove;
     return _react2.default.createElement(
         'ul',
         { className: 'items-list' },
         itemsList.map(function (item) {
             return _react2.default.createElement(_Item2.default, _extends({
                 key: item.id
-            }, item));
+            }, item, {
+                onClickRemove: function onClickRemove() {
+                    return toggleRemove(item.id);
+                }
+            }));
         })
     );
 };
