@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Item = ({ title }) => (
-    <li>
+    <li className="list-item">
         {title}
     </li>
 )

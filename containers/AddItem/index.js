@@ -1,6 +1,8 @@
+
 import React from 'react'
 import {connect} from 'react-redux'
-import {addItem} from '../actions'
+import {addItem} from '../../actions'
+require('./style.scss');
 
 const AddItem = ({dispatch}) => {
     let input

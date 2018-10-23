@@ -1,2 +1,7 @@
-body {
+@import "reset";
+@import "section-items-list";
+
+.container {
+  margin: auto;
+  max-width: 1000px;
 }
