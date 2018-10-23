@@ -10869,10 +10869,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var store = (0, _configureStore2.default)({
     itemsList: [{
         id: 0,
-        title: 'Title1'
+        title: 'Title1',
+        storeName: 'Store 1'
     }, {
         id: 1,
-        title: 'Title2'
+        title: 'Title2',
+        storeName: 'Store 2'
     }]
 });
 
@@ -24576,11 +24578,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 var nextTodoId = 2;
 
-var addItem = exports.addItem = function addItem(title) {
+var addItem = exports.addItem = function addItem(title, storeName) {
     return {
         type: 'ADD_ITEM',
         id: nextTodoId++,
-        title: title
+        title: title,
+        storeName: storeName
     };
 };
 
@@ -24597,7 +24600,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(34);
 
-var _ItemsList = __webpack_require__(233);
+var _ItemsList = __webpack_require__(253);
 
 var _ItemsList2 = _interopRequireDefault(_ItemsList);
 
@@ -24612,44 +24615,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(_ItemsList2.default);
 
 /***/ }),
-/* 233 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(13);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Item = __webpack_require__(234);
-
-var _Item2 = _interopRequireDefault(_Item);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ItemsList = function ItemsList(_ref) {
-    var itemsList = _ref.itemsList;
-    return _react2.default.createElement(
-        'ul',
-        { className: 'items-list' },
-        itemsList.map(function (item) {
-            return _react2.default.createElement(_Item2.default, _extends({
-                key: item.id
-            }, item));
-        })
-    );
-};
-
-exports.default = ItemsList;
-
-/***/ }),
+/* 233 */,
 /* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24667,11 +24633,23 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Item = function Item(_ref) {
-    var title = _ref.title;
+    var title = _ref.title,
+        storeName = _ref.storeName;
     return _react2.default.createElement(
         "li",
-        { className: "list-item" },
-        title
+        { className: "items-list-item" },
+        _react2.default.createElement(
+            "div",
+            { className: "title" },
+            "Title: ",
+            title
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "store-name" },
+            "Store name: ",
+            storeName
+        )
     );
 };
 
@@ -25055,7 +25033,8 @@ function itemsList() {
         case 'ADD_ITEM':
             return [].concat(_toConsumableArray(state), [{
                 id: action.id,
-                title: action.title
+                title: action.title,
+                storeName: action.storeName
             }]);
         default:
             return state;
@@ -25092,26 +25071,41 @@ __webpack_require__(251);
 var AddItem = function AddItem(_ref) {
     var dispatch = _ref.dispatch;
 
-    var input = void 0;
+    var input = void 0,
+        storeNameInput = void 0;
 
     return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
             'form',
-            {
+            { className: 'form-add-item',
                 onSubmit: function onSubmit(e) {
                     e.preventDefault();
                     if (!input.value.trim()) {
                         return;
                     }
-                    dispatch((0, _actions.addItem)(input.value));
+                    dispatch((0, _actions.addItem)(input.value, storeNameInput.value));
                     input.value = '';
+                    storeNameInput.value = '';
                 }
             },
-            _react2.default.createElement('input', { ref: function ref(node) {
-                    return input = node;
-                } }),
+            _react2.default.createElement(
+                'label',
+                { htmlFor: 'title' },
+                'Title:',
+                _react2.default.createElement('input', { ref: function ref(node) {
+                        return input = node;
+                    }, name: 'title' })
+            ),
+            _react2.default.createElement(
+                'label',
+                { htmlFor: 'store-name' },
+                'Store name:',
+                _react2.default.createElement('input', { ref: function ref(node) {
+                        return storeNameInput = node;
+                    }, name: 'store-name' })
+            ),
             _react2.default.createElement(
                 'button',
                 { type: 'submit' },
@@ -25125,6 +25119,53 @@ exports.default = (0, _reactRedux.connect)()(AddItem);
 
 /***/ }),
 /* 251 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 252 */,
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Item = __webpack_require__(234);
+
+var _Item2 = _interopRequireDefault(_Item);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(254);
+
+var ItemsList = function ItemsList(_ref) {
+    var itemsList = _ref.itemsList;
+    return _react2.default.createElement(
+        'ul',
+        { className: 'items-list' },
+        itemsList.map(function (item) {
+            return _react2.default.createElement(_Item2.default, _extends({
+                key: item.id
+            }, item));
+        })
+    );
+};
+
+exports.default = ItemsList;
+
+/***/ }),
+/* 254 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

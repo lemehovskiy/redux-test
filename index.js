@@ -8,11 +8,13 @@ const store = configureStore({
     itemsList: [
         {
             id: 0,
-            title: 'Title1'
+            title: 'Title1',
+            storeName: 'Store 1'
         },
         {
             id: 1,
-            title: 'Title2'
+            title: 'Title2',
+            storeName: 'Store 2'
         }
     ]
 });

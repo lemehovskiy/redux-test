@@ -5,7 +5,8 @@ export default function itemsList(state = [], action) {
                 ...state,
                 {
                     id: action.id,
-                    title: action.title
+                    title: action.title,
+                    storeName: action.storeName
                 }
             ]
         default:

@@ -1,5 +1,6 @@
 import React from 'react'
-import Item from './Item'
+import Item from './../Item'
+require('./style.scss');
 
 const ItemsList = ({ itemsList }) => (
     <ul className="items-list">
