@@ -20,6 +20,8 @@ import React from 'react'
 import Counter from '../containers/Counter';
 import AddItem from '../containers/AddItem/';
 import VisibleItemsList from '../containers/VisibleItemsList';
+import Modal from '../containers/Modals/Modal';
+
 require('../src/sass/style.scss');
 
 const App = () => (
@@ -28,6 +30,7 @@ const App = () => (
             <div className="container">
                 <AddItem/>
                 <VisibleItemsList/>
+                <Modal/>
             </div>
         </div>
     </div>

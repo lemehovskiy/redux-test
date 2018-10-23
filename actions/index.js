@@ -8,7 +8,17 @@ export const addItem = (title, storeName) => ({
 })
 
 
-export const toggleRemove = (id) => ({
+export const removeItem = (id) => ({
     type: 'REMOVE_ITEM',
     id: id
+})
+
+export const showModal = (id, modalType, modalProps) => ({
+    type: 'SHOW_MODAL',
+    modalType,
+    modalProps
+})
+
+export const hideModal = () => ({
+    type: 'HIDE_MODAL'
 })

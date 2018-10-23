@@ -1,13 +1,14 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import ItemsList from '../components/ItemsList/'
-import { toggleRemove } from '../actions'
+import {showModal} from "../actions/";
 
 const mapStateToProps = state => ({
     itemsList: state.itemsList
 })
 
 const mapDispatchToProps = dispatch => ({
-    toggleRemove: id => dispatch(toggleRemove(id))
+    removeItem: id => dispatch(showModal('SHOW_MODAL', 'DELETE_POST', {postId: id})
+    )
 })
 
 export default connect(

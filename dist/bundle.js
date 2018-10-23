@@ -24426,9 +24426,13 @@ var _VisibleItemsList = __webpack_require__(232);
 
 var _VisibleItemsList2 = _interopRequireDefault(_VisibleItemsList);
 
+var _Modal = __webpack_require__(257);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { bindActionCreators } from 'redux';
+__webpack_require__(235); // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
 // import Counter from '../containers/Counter';
 // import * as CounterActions from '../actions/counter';
@@ -24446,8 +24450,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 
-__webpack_require__(235);
-
 var App = function App() {
     return _react2.default.createElement(
         'div',
@@ -24459,7 +24461,8 @@ var App = function App() {
                 'div',
                 { className: 'container' },
                 _react2.default.createElement(_AddItem2.default, null),
-                _react2.default.createElement(_VisibleItemsList2.default, null)
+                _react2.default.createElement(_VisibleItemsList2.default, null),
+                _react2.default.createElement(_Modal2.default, null)
             )
         )
     );
@@ -24587,10 +24590,24 @@ var addItem = exports.addItem = function addItem(title, storeName) {
     };
 };
 
-var toggleRemove = exports.toggleRemove = function toggleRemove(id) {
+var removeItem = exports.removeItem = function removeItem(id) {
     return {
         type: 'REMOVE_ITEM',
         id: id
+    };
+};
+
+var showModal = exports.showModal = function showModal(id, modalType, modalProps) {
+    return {
+        type: 'SHOW_MODAL',
+        modalType: modalType,
+        modalProps: modalProps
+    };
+};
+
+var hideModal = exports.hideModal = function hideModal() {
+    return {
+        type: 'HIDE_MODAL'
     };
 };
 
@@ -24623,8 +24640,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        toggleRemove: function toggleRemove(id) {
-            return dispatch((0, _actions.toggleRemove)(id));
+        removeItem: function removeItem(id) {
+            return dispatch((0, _actions.showModal)('SHOW_MODAL', 'DELETE_POST', { postId: id }));
         }
     };
 };
@@ -25005,10 +25022,14 @@ var _item = __webpack_require__(245);
 
 var _item2 = _interopRequireDefault(_item);
 
+var _modal = __webpack_require__(256);
+
+var _modal2 = _interopRequireDefault(_modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
-  counter: _counter2.default, itemsList: _item2.default
+  counter: _counter2.default, itemsList: _item2.default, modal: _modal2.default
 });
 
 exports.default = rootReducer;
@@ -25183,7 +25204,7 @@ __webpack_require__(254);
 
 var ItemsList = function ItemsList(_ref) {
     var itemsList = _ref.itemsList,
-        toggleRemove = _ref.toggleRemove;
+        removeItem = _ref.removeItem;
     return _react2.default.createElement(
         'ul',
         { className: 'items-list' },
@@ -25192,7 +25213,7 @@ var ItemsList = function ItemsList(_ref) {
                 key: item.id
             }, item, {
                 onClickRemove: function onClickRemove() {
-                    return toggleRemove(item.id);
+                    return removeItem(item.id);
                 }
             }));
         })
@@ -25206,6 +25227,141 @@ exports.default = ItemsList;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 255 */,
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = modal;
+var initialState = {
+    modalType: null,
+    modalProps: {}
+};
+
+function modal() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case 'SHOW_MODAL':
+            return {
+                modalType: action.modalType,
+                modalProps: action.modalProps
+            };
+        case 'HIDE_MODAL':
+            console.log('hide_modal');
+            return initialState;
+        default:
+            return state;
+    }
+}
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _DeleteItemModal = __webpack_require__(258);
+
+var _DeleteItemModal2 = _interopRequireDefault(_DeleteItemModal);
+
+var _reactRedux = __webpack_require__(34);
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import ConfirmLogoutModal from './ConfirmLogoutModal'
+var MODAL_COMPONENTS = {
+    'DELETE_POST': _DeleteItemModal2.default
+    // 'CONFIRM_LOGOUT': ConfirmLogoutModal,
+    /* other modals */
+}; // These are regular React components we will write soon
+
+
+var ModalRoot = function ModalRoot(_ref) {
+    var modalType = _ref.modalType,
+        modalProps = _ref.modalProps;
+
+    if (!modalType) {
+        return null; // after React v15 you can return null here
+    }
+
+    console.log(modalProps);
+    var SpecificModal = MODAL_COMPONENTS[modalType];
+    return _react2.default.createElement(SpecificModal, modalProps);
+};
+
+exports.default = (0, _reactRedux.connect)(function (state) {
+    return state.modal;
+})(ModalRoot);
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _actions = __webpack_require__(231);
+
+var _reactRedux = __webpack_require__(34);
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DeletePostModal = function DeletePostModal(_ref) {
+    var postId = _ref.postId,
+        dispatch = _ref.dispatch;
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'p',
+            null,
+            'Delete post ',
+            postId,
+            '?'
+        ),
+        _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                    dispatch((0, _actions.hideModal)());
+                    dispatch((0, _actions.removeItem)(postId)).then(function () {});
+                } },
+            'Yes'
+        ),
+        _react2.default.createElement(
+            'button',
+            null,
+            'Nope'
+        )
+    );
+};
+
+exports.default = (0, _reactRedux.connect)()(DeletePostModal);
 
 /***/ })
 /******/ ]);
