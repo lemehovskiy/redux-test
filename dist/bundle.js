@@ -10811,30 +10811,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.increment = increment;
-exports.decrement = decrement;
-function increment() {
-  return {
-    type: 'INCREMENT_COUNTER'
-  };
-}
-
-function decrement() {
-  return {
-    type: 'DECREMENT_COUNTER'
-  };
-}
-
-/***/ }),
+/* 96 */,
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24414,10 +24391,6 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Counter = __webpack_require__(229);
-
-var _Counter2 = _interopRequireDefault(_Counter);
-
 var _AddItem = __webpack_require__(250);
 
 var _AddItem2 = _interopRequireDefault(_AddItem);
@@ -24432,23 +24405,7 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(235); // import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-// import Counter from '../containers/Counter';
-// import * as CounterActions from '../actions/counter';
-//
-// function mapStateToProps(state) {
-//   return {
-//     counter: state.counter
-//   };
-// }
-//
-//   function mapDispatchToProps(dispatch) {
-//   return bindActionCreators(CounterActions, dispatch);
-// }
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(Counter);
-
+__webpack_require__(235);
 
 var App = function App() {
     return _react2.default.createElement(
@@ -24461,6 +24418,11 @@ var App = function App() {
                 'div',
                 { className: 'container' },
                 _react2.default.createElement(_AddItem2.default, null),
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Items list'
+                ),
                 _react2.default.createElement(_VisibleItemsList2.default, null)
             )
         ),
@@ -24471,104 +24433,7 @@ var App = function App() {
 exports.default = App;
 
 /***/ }),
-/* 229 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(13);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(53);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _redux = __webpack_require__(25);
-
-var _reactRedux = __webpack_require__(34);
-
-var _counter = __webpack_require__(96);
-
-var CounterActions = _interopRequireWildcard(_counter);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Counter = function (_Component) {
-  _inherits(Counter, _Component);
-
-  function Counter() {
-    _classCallCheck(this, Counter);
-
-    return _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).apply(this, arguments));
-  }
-
-  _createClass(Counter, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          increment = _props.increment,
-          decrement = _props.decrement,
-          counter = _props.counter;
-
-      return _react2.default.createElement(
-        'p',
-        null,
-        'Clicked: ',
-        counter,
-        ' times',
-        ' ',
-        _react2.default.createElement(
-          'button',
-          { onClick: increment },
-          '+'
-        ),
-        ' ',
-        _react2.default.createElement(
-          'button',
-          { onClick: decrement },
-          '-'
-        )
-      );
-    }
-  }]);
-
-  return Counter;
-}(_react.Component);
-
-Counter.propTypes = {
-  increment: _propTypes2.default.func.isRequired,
-  counter: _propTypes2.default.number.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    counter: state.counter
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)(CounterActions, dispatch);
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Counter);
-
-/***/ }),
+/* 229 */,
 /* 230 */,
 /* 231 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -24734,18 +24599,11 @@ var _reducers = __webpack_require__(243);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _counter = __webpack_require__(96);
-
-var actionCreators = _interopRequireWildcard(_counter);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var isMonitorAction = exports.isMonitorAction = void 0;
 function configureStore(preloadedState) {
-  var composeEnhancers = (0, _reduxDevtoolsExtension.composeWithDevTools)({ actionCreators: actionCreators });
-  var store = (0, _redux.createStore)(_reducers2.default, preloadedState, composeEnhancers((0, _redux.applyMiddleware)((0, _reduxImmutableStateInvariant2.default)(), _reduxThunk2.default)));
+  var store = (0, _redux.createStore)(_reducers2.default, preloadedState);
 
   if (false) {
     // Enable Webpack hot module replacement for reducers
@@ -25014,10 +24872,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(25);
 
-var _counter = __webpack_require__(244);
-
-var _counter2 = _interopRequireDefault(_counter);
-
 var _item = __webpack_require__(245);
 
 var _item2 = _interopRequireDefault(_item);
@@ -25029,37 +24883,13 @@ var _modal2 = _interopRequireDefault(_modal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
-  counter: _counter2.default, itemsList: _item2.default, modal: _modal2.default
+  itemsList: _item2.default, modal: _modal2.default
 });
 
 exports.default = rootReducer;
 
 /***/ }),
-/* 244 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = counter;
-function counter() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var action = arguments[1];
-
-    switch (action.type) {
-        case 'INCREMENT_COUNTER':
-            return state + 1;
-        case 'DECREMENT_COUNTER':
-            return state - 1;
-        default:
-            return state;
-    }
-}
-
-/***/ }),
+/* 244 */,
 /* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25256,7 +25086,6 @@ function modal() {
                 modalProps: action.modalProps
             };
         case 'HIDE_MODAL':
-            console.log('hide_modal');
             return initialState;
         default:
             return state;

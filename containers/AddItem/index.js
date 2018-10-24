@@ -20,7 +20,6 @@ const AddItem = ({dispatch}) => {
                   storeNameInput.value = ''
                 }}
             >
-
                     <label htmlFor="title">
                         Title:
                         <input ref={node => input = node} name="title"/>

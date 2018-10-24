@@ -3,14 +3,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import invariant from 'redux-immutable-state-invariant';
 import reducer from '../reducers';
-import * as actionCreators from '../actions/counter'; 
 
 export let isMonitorAction;
 export default function configureStore(preloadedState) {
-  const composeEnhancers = composeWithDevTools({ actionCreators });
-  const store = createStore(reducer, preloadedState, composeEnhancers(
-    applyMiddleware(invariant(), thunk)
-  ));
+  const store = createStore(reducer, preloadedState);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
