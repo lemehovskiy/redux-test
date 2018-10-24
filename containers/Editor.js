@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addItem, saveItem} from '../actions/'
+import {addItem, saveItem, closeItemEditor} from '../actions/'
 
 const Editor = ({dispatch, editorType, id, title, storeName}) => {
     let input,
@@ -14,6 +14,7 @@ const Editor = ({dispatch, editorType, id, title, storeName}) => {
                     return
                   }
                   dispatch(saveItem(id, input.value, storeNameInput.value));
+                  dispatch(closeItemEditor(id));
                   input.value = '';
                   storeNameInput.value = '';
                 }}

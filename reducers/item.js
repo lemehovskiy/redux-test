@@ -1,4 +1,6 @@
 export default function itemsList(state = [], action) {
+    let updatedItems = [];
+
     switch (action.type) {
         case 'ADD_ITEM':
             return [
@@ -13,8 +15,8 @@ export default function itemsList(state = [], action) {
         case 'REMOVE_ITEM':
             return state.filter(itemsList => itemsList.id !== action.id);
 
-        case 'EDIT_ITEM':
-            const updatedItems = state.map(item => {
+        case 'OPEN_ITEM_EDITOR':
+            updatedItems = state.map(item => {
                 if (item.id === action.id) {
                     return {...item, editMode: true}
                 }
@@ -22,15 +24,24 @@ export default function itemsList(state = [], action) {
             })
             return updatedItems
 
+        case 'CLOSE_ITEM_EDITOR':
+            updatedItems = state.map(item => {
+                if (item.id === action.id) {
+                    return {...item, editMode: false}
+                }
+                return item
+            })
+            return updatedItems
+
         case 'SAVE_ITEM':
-            const updatedSaveItems = state.map(item => {
+            updatedItems = state.map(item => {
                 console.log(action.title);
                 if (item.id === action.id) {
                     return {...item, title: action.title, storeName: action.storeName}
                 }
                 return item
             })
-            return updatedSaveItems
+            return updatedItems
 
         default:
             return state;

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import ItemsList from '../components/ItemsList/'
-import {showModal, editItem} from "../actions/";
+import {showModal, openItemEditor} from "../actions/";
 
 const mapStateToProps = state => ({
     itemsList: state.itemsList
@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     removeItem: id => dispatch(showModal('SHOW_MODAL', 'DELETE_POST', {postId: id})),
-    editItem: id => dispatch(editItem(id))
+    openItemEditor: id => dispatch(openItemEditor(id))
 });
 
 export default connect(

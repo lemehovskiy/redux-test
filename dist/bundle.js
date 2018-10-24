@@ -24462,9 +24462,16 @@ var removeItem = exports.removeItem = function removeItem(id) {
     };
 };
 
-var editItem = exports.editItem = function editItem(id) {
+var openItemEditor = exports.openItemEditor = function openItemEditor(id) {
     return {
-        type: 'EDIT_ITEM',
+        type: 'OPEN_ITEM_EDITOR',
+        id: id
+    };
+};
+
+var closeItemEditor = exports.closeItemEditor = function closeItemEditor(id) {
+    return {
+        type: 'CLOSE_ITEM_EDITOR',
         id: id
     };
 };
@@ -24524,8 +24531,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         removeItem: function removeItem(id) {
             return dispatch((0, _actions.showModal)('SHOW_MODAL', 'DELETE_POST', { postId: id }));
         },
-        editItem: function editItem(id) {
-            return dispatch((0, _actions.editItem)(id));
+        openItemEditor: function openItemEditor(id) {
+            return dispatch((0, _actions.openItemEditor)(id));
         }
     };
 };
@@ -24944,6 +24951,8 @@ function itemsList() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
+    var updatedItems = [];
+
     switch (action.type) {
         case 'ADD_ITEM':
             return [].concat(_toConsumableArray(state), [{
@@ -24957,8 +24966,8 @@ function itemsList() {
                 return itemsList.id !== action.id;
             });
 
-        case 'EDIT_ITEM':
-            var updatedItems = state.map(function (item) {
+        case 'OPEN_ITEM_EDITOR':
+            updatedItems = state.map(function (item) {
                 if (item.id === action.id) {
                     return _extends({}, item, { editMode: true });
                 }
@@ -24966,15 +24975,24 @@ function itemsList() {
             });
             return updatedItems;
 
+        case 'CLOSE_ITEM_EDITOR':
+            updatedItems = state.map(function (item) {
+                if (item.id === action.id) {
+                    return _extends({}, item, { editMode: false });
+                }
+                return item;
+            });
+            return updatedItems;
+
         case 'SAVE_ITEM':
-            var updatedSaveItems = state.map(function (item) {
+            updatedItems = state.map(function (item) {
                 console.log(action.title);
                 if (item.id === action.id) {
                     return _extends({}, item, { title: action.title, storeName: action.storeName });
                 }
                 return item;
             });
-            return updatedSaveItems;
+            return updatedItems;
 
         default:
             return state;
@@ -25097,7 +25115,7 @@ __webpack_require__(254);
 var ItemsList = function ItemsList(_ref) {
     var itemsList = _ref.itemsList,
         removeItem = _ref.removeItem,
-        editItem = _ref.editItem;
+        openItemEditor = _ref.openItemEditor;
 
 
     var items = itemsList.map(function (item) {
@@ -25108,7 +25126,7 @@ var ItemsList = function ItemsList(_ref) {
                 return removeItem(item.id);
             },
             onClickEdit: function onClickEdit() {
-                return editItem(item.id);
+                return openItemEditor(item.id);
             }
         }));
 
@@ -25362,6 +25380,7 @@ var Editor = function Editor(_ref) {
                     return;
                 }
                 dispatch((0, _actions.saveItem)(id, input.value, storeNameInput.value));
+                dispatch((0, _actions.closeItemEditor)(id));
                 input.value = '';
                 storeNameInput.value = '';
             }

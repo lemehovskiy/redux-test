@@ -12,8 +12,13 @@ export const removeItem = (id) => ({
     id: id
 })
 
-export const editItem = (id) => ({
-    type: 'EDIT_ITEM',
+export const openItemEditor = (id) => ({
+    type: 'OPEN_ITEM_EDITOR',
+    id: id
+})
+
+export const closeItemEditor = (id) => ({
+    type: 'CLOSE_ITEM_EDITOR',
     id: id
 })
 
