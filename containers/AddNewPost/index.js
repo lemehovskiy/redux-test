@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addItem, closeAddNewEditor} from '../../actions'
+import {addItem, openAddNewEditor, closeAddNewEditor} from '../../actions'
 require('./style.scss');
 
 const AddNewPost = ({dispatch, isOpen}) => {
@@ -12,6 +12,9 @@ const AddNewPost = ({dispatch, isOpen}) => {
         dispatch(closeAddNewEditor())
     }
 
+    function onClickOpen(){
+        dispatch(openAddNewEditor());
+    }
 
     const form =  <form className="form-add-item"
                         onSubmit={e => {
@@ -33,17 +36,20 @@ const AddNewPost = ({dispatch, isOpen}) => {
             Store name:
             <input ref={node => storeNameInput = node} name="store-name"/>
         </label>
-        <button type="submit">Add post</button>
+        <button type="submit">Add</button>
         <button type="button" onClick={onClickClose}>Close</button>
     </form>;
+
+       const openTrigger = <div>
+           <button type="button" onClick={onClickOpen}>Add new post</button>
+       </div>;
 
 
 
     return (
          <div>
-             <div className="controls">
+             {isOpen ? form : openTrigger}
 
-             </div>
          </div>
     )
 }
