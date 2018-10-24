@@ -25371,6 +25371,10 @@ var Editor = function Editor(_ref) {
     var input = void 0,
         storeNameInput = void 0;
 
+    function onClickClose() {
+        dispatch((0, _actions.closeItemEditor)(id));
+    }
+
     return _react2.default.createElement(
         'form',
         { className: 'form-add-item',
@@ -25405,6 +25409,11 @@ var Editor = function Editor(_ref) {
             'button',
             { type: 'submit' },
             editorType == 'edit' ? 'Save' : 'Add post'
+        ),
+        _react2.default.createElement(
+            'button',
+            { type: 'button', onClick: onClickClose },
+            'Close'
         )
     );
 };

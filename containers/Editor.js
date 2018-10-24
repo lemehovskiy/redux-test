@@ -5,7 +5,11 @@ import {addItem, saveItem, closeItemEditor} from '../actions/'
 const Editor = ({dispatch, editorType, id, title, storeName}) => {
     let input,
         storeNameInput;
-    
+
+    function onClickClose(){
+        dispatch(closeItemEditor(id))
+    }
+
     return (
         <form className="form-add-item"
               onSubmit={e => {
@@ -30,10 +34,9 @@ const Editor = ({dispatch, editorType, id, title, storeName}) => {
             <button type="submit">
                 {editorType == 'edit' ? 'Save' : 'Add post'}
             </button>
+            <button type="button" onClick={onClickClose}>Close</button>
         </form>
-    )
-
-
+    );
 }
 
 export default connect()(Editor)
