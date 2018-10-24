@@ -15,9 +15,14 @@ const ModalRoot = ({ modalType, modalProps }) => {
         return null // after React v15 you can return null here
     }
 
-    console.log(modalProps);
     const SpecificModal = MODAL_COMPONENTS[modalType]
-    return <SpecificModal {...modalProps} />
+
+    return (
+        <div>
+            <div className="modal-overlay"></div>
+            <SpecificModal {...modalProps} />
+        </div>
+    )
 }
 
 export default connect(

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 
 
 const DeletePostModal = ({postId, dispatch}) => (
-    <div>
+    <div className="modal modal-delete-post">
         <p>Delete post {postId}?</p>
         <button onClick={() => {
                 dispatch(hideModal());
@@ -12,9 +12,12 @@ const DeletePostModal = ({postId, dispatch}) => (
             }}>
             Yes
         </button>
-        <button>
+        <button onClick={() => {
+                dispatch(hideModal());
+            }}>
             Nope
         </button>
+        <div className="overlay"></div>
     </div>
 )
 

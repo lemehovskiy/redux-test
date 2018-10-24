@@ -30,9 +30,11 @@ const App = () => (
             <div className="container">
                 <AddItem/>
                 <VisibleItemsList/>
-                <Modal/>
             </div>
         </div>
+
+        <Modal/>
+        
     </div>
 )
 

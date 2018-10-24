@@ -24461,10 +24461,10 @@ var App = function App() {
                 'div',
                 { className: 'container' },
                 _react2.default.createElement(_AddItem2.default, null),
-                _react2.default.createElement(_VisibleItemsList2.default, null),
-                _react2.default.createElement(_Modal2.default, null)
+                _react2.default.createElement(_VisibleItemsList2.default, null)
             )
-        )
+        ),
+        _react2.default.createElement(_Modal2.default, null)
     );
 };
 
@@ -25302,9 +25302,14 @@ var ModalRoot = function ModalRoot(_ref) {
         return null; // after React v15 you can return null here
     }
 
-    console.log(modalProps);
     var SpecificModal = MODAL_COMPONENTS[modalType];
-    return _react2.default.createElement(SpecificModal, modalProps);
+
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('div', { className: 'modal-overlay' }),
+        _react2.default.createElement(SpecificModal, modalProps)
+    );
 };
 
 exports.default = (0, _reactRedux.connect)(function (state) {
@@ -25337,7 +25342,7 @@ var DeletePostModal = function DeletePostModal(_ref) {
         dispatch = _ref.dispatch;
     return _react2.default.createElement(
         'div',
-        null,
+        { className: 'modal modal-delete-post' },
         _react2.default.createElement(
             'p',
             null,
@@ -25355,9 +25360,12 @@ var DeletePostModal = function DeletePostModal(_ref) {
         ),
         _react2.default.createElement(
             'button',
-            null,
+            { onClick: function onClick() {
+                    dispatch((0, _actions.hideModal)());
+                } },
             'Nope'
-        )
+        ),
+        _react2.default.createElement('div', { className: 'overlay' })
     );
 };
 
