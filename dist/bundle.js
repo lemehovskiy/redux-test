@@ -24559,8 +24559,7 @@ var AddNewPost = function AddNewPost(_ref) {
                 dispatch((0, _actions.addItem)(input.value, storeNameInput.value));
                 input.value = '';
                 storeNameInput.value = '';
-            }
-        },
+            } },
         _react2.default.createElement(
             'label',
             { htmlFor: 'title' },
