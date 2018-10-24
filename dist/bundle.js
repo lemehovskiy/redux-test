@@ -24462,6 +24462,13 @@ var removeItem = exports.removeItem = function removeItem(id) {
     };
 };
 
+var editItem = exports.editItem = function editItem(id) {
+    return {
+        type: 'EDIT_ITEM',
+        id: id
+    };
+};
+
 var showModal = exports.showModal = function showModal(id, modalType, modalProps) {
     return {
         type: 'SHOW_MODAL',
@@ -24507,6 +24514,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         removeItem: function removeItem(id) {
             return dispatch((0, _actions.showModal)('SHOW_MODAL', 'DELETE_POST', { postId: id }));
+        },
+        editItem: function editItem(id) {
+            return dispatch((0, _actions.editItem)(id));
         }
     };
 };
@@ -24533,6 +24543,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Item = function Item(_ref) {
     var onClickRemove = _ref.onClickRemove,
+        onClickEdit = _ref.onClickEdit,
         title = _ref.title,
         storeName = _ref.storeName;
     return _react2.default.createElement(
@@ -24557,6 +24568,11 @@ var Item = function Item(_ref) {
                 "button",
                 { onClick: onClickRemove },
                 "Remove"
+            ),
+            _react2.default.createElement(
+                "button",
+                { onClick: onClickEdit },
+                "Edit"
             )
         )
     );
@@ -24599,11 +24615,18 @@ var _reducers = __webpack_require__(243);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
+var _actions = __webpack_require__(231);
+
+var actionCreators = _interopRequireWildcard(_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var isMonitorAction = exports.isMonitorAction = void 0;
 function configureStore(preloadedState) {
-  var store = (0, _redux.createStore)(_reducers2.default, preloadedState);
+  var composeEnhancers = (0, _reduxDevtoolsExtension.composeWithDevTools)({ actionCreators: actionCreators });
+  var store = (0, _redux.createStore)(_reducers2.default, preloadedState, composeEnhancers((0, _redux.applyMiddleware)((0, _reduxImmutableStateInvariant2.default)(), _reduxThunk2.default)));
 
   if (false) {
     // Enable Webpack hot module replacement for reducers
@@ -24899,6 +24922,9 @@ exports.default = rootReducer;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.default = itemsList;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -24919,8 +24945,21 @@ function itemsList() {
             return state.filter(function (itemsList) {
                 return itemsList.id !== action.id;
             });
+
+        case 'EDIT_ITEM':
+            var updatedItems = state.map(function (item) {
+                if (item.id === action.id) {
+                    return _extends({}, item, { editMode: true });
+                }
+                return item;
+            });
+            return updatedItems;
+
+        case 'SAVE_ITEM':
+
         default:
             return state;
+
     }
 }
 
@@ -25034,7 +25073,8 @@ __webpack_require__(254);
 
 var ItemsList = function ItemsList(_ref) {
     var itemsList = _ref.itemsList,
-        removeItem = _ref.removeItem;
+        removeItem = _ref.removeItem,
+        editItem = _ref.editItem;
     return _react2.default.createElement(
         'ul',
         { className: 'items-list' },
@@ -25044,6 +25084,9 @@ var ItemsList = function ItemsList(_ref) {
             }, item, {
                 onClickRemove: function onClickRemove() {
                     return removeItem(item.id);
+                },
+                onClickEdit: function onClickEdit() {
+                    return editItem(item.id);
                 }
             }));
         })

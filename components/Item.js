@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Item = ({ onClickRemove, title, storeName }) => (
+const Item = ({ onClickRemove, onClickEdit, title, storeName }) => (
     <li className="items-list-item">
         <div className="title">
             Title: {title}
@@ -11,7 +11,10 @@ const Item = ({ onClickRemove, title, storeName }) => (
 
         <div className="controls">
             <button onClick={onClickRemove}>Remove</button>
+            <button onClick={onClickEdit}>Edit</button>
         </div>
+        
+        
     </li>
 )
 

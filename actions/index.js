@@ -12,6 +12,12 @@ export const removeItem = (id) => ({
     id: id
 })
 
+export const editItem = (id) => ({
+    type: 'EDIT_ITEM',
+    id: id
+})
+
+
 export const showModal = (id, modalType, modalProps) => ({
     type: 'SHOW_MODAL',
     modalType,
