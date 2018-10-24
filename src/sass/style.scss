@@ -1,17 +1,10 @@
 @import "reset";
 @import "section-items-list";
 @import "modal";
+@import "buttons";
 
 body {
   font-size: 16px;
-}
-
-button {
-  background: #f7f7f7;
-  padding: 10px 20px;
-  border: 2px solid #bdbdbd;
-  border-radius: 4px;
-  font-size: 14px;
 }
 
 .container {

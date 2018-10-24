@@ -2,8 +2,7 @@
   padding: 20px 0 0;
   >li{
     padding: 20px;
-    &:nth-child(odd) {
-      background: #f7f7f7;
-    }
+    margin: 5px 0 0;
+    border: 2px solid #D7DCE2;
   }
 }

@@ -10,7 +10,7 @@ const Item = ({onClickRemove, onClickEdit, title, storeName}) => {
             Store name: {storeName}
         </div>
 
-        <div className="controls">
+        <div className="button-group">
             <button onClick={onClickRemove}>Remove</button>
             <button onClick={onClickEdit}>Edit</button>
         </div>

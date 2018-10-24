@@ -36,18 +36,19 @@ const AddNewPost = ({dispatch, isOpen}) => {
                 Store name:
                 <input ref={node => storeNameInput = node} name="store-name"/>
             </label>
-            <button type="submit">Add</button>
-            <button type="button" onClick={onClickClose}>Close</button>
+            <div className="button-group">
+                <button type="submit">Save</button>
+                <button type="button" onClick={onClickClose}>Cancel</button>
+            </div>
         </form>;
 
-    const openTrigger = <div>
+    const openButton = <div>
         <button type="button" onClick={onClickOpen}>Add new post</button>
     </div>;
 
     return (
-        <div>
-            {isOpen ? form : openTrigger}
-
+        <div className="section-add-item">
+            {isOpen ? form : openButton}
         </div>
     )
 }

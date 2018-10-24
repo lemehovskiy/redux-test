@@ -24577,18 +24577,22 @@ var AddNewPost = function AddNewPost(_ref) {
                 }, name: 'store-name' })
         ),
         _react2.default.createElement(
-            'button',
-            { type: 'submit' },
-            'Add'
-        ),
-        _react2.default.createElement(
-            'button',
-            { type: 'button', onClick: onClickClose },
-            'Close'
+            'div',
+            { className: 'button-group' },
+            _react2.default.createElement(
+                'button',
+                { type: 'submit' },
+                'Save'
+            ),
+            _react2.default.createElement(
+                'button',
+                { type: 'button', onClick: onClickClose },
+                'Cancel'
+            )
         )
     );
 
-    var openTrigger = _react2.default.createElement(
+    var openButton = _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
@@ -24600,8 +24604,8 @@ var AddNewPost = function AddNewPost(_ref) {
 
     return _react2.default.createElement(
         'div',
-        null,
-        isOpen ? form : openTrigger
+        { className: 'section-add-item' },
+        isOpen ? form : openButton
     );
 };
 
@@ -24689,7 +24693,6 @@ var ItemsList = function ItemsList(_ref) {
         removeItem = _ref.removeItem,
         openItemEditor = _ref.openItemEditor;
 
-
     var items = itemsList.map(function (item) {
         var displayItem = _react2.default.createElement(_Item2.default, _extends({
             key: item.id
@@ -24761,7 +24764,7 @@ var Item = function Item(_ref) {
         ),
         _react2.default.createElement(
             "div",
-            { className: "controls" },
+            { className: "button-group" },
             _react2.default.createElement(
                 "button",
                 { onClick: onClickRemove },
@@ -24997,19 +25000,23 @@ var DeletePostModal = function DeletePostModal(_ref) {
             '?'
         ),
         _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                    dispatch((0, _actions.hideModal)());
-                    dispatch((0, _actions.removeItem)(postId));
-                } },
-            'Yes'
-        ),
-        _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                    dispatch((0, _actions.hideModal)());
-                } },
-            'Nope'
+            'div',
+            { className: 'button-group' },
+            _react2.default.createElement(
+                'button',
+                { onClick: function onClick() {
+                        dispatch((0, _actions.hideModal)());
+                        dispatch((0, _actions.removeItem)(postId));
+                    } },
+                'Yes'
+            ),
+            _react2.default.createElement(
+                'button',
+                { onClick: function onClick() {
+                        dispatch((0, _actions.hideModal)());
+                    } },
+                'Nope'
+            )
         ),
         _react2.default.createElement('div', { className: 'overlay' })
     );
