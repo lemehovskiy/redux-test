@@ -23,7 +23,14 @@ export default function itemsList(state = [], action) {
             return updatedItems
 
         case 'SAVE_ITEM':
-
+            const updatedSaveItems = state.map(item => {
+                console.log(action.title);
+                if (item.id === action.id) {
+                    return {...item, title: action.title, storeName: action.storeName}
+                }
+                return item
+            })
+            return updatedSaveItems
 
         default:
             return state;

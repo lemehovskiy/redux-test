@@ -17,6 +17,13 @@ export const editItem = (id) => ({
     id: id
 })
 
+export const saveItem = (id, title, storeName) => ({
+    type: 'SAVE_ITEM',
+    id: id,
+    title,
+    storeName
+})
+
 
 export const showModal = (id, modalType, modalProps) => ({
     type: 'SHOW_MODAL',

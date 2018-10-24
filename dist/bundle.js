@@ -24469,6 +24469,15 @@ var editItem = exports.editItem = function editItem(id) {
     };
 };
 
+var saveItem = exports.saveItem = function saveItem(id, title, storeName) {
+    return {
+        type: 'SAVE_ITEM',
+        id: id,
+        title: title,
+        storeName: storeName
+    };
+};
+
 var showModal = exports.showModal = function showModal(id, modalType, modalProps) {
     return {
         type: 'SHOW_MODAL',
@@ -24546,6 +24555,8 @@ var Item = function Item(_ref) {
         onClickEdit = _ref.onClickEdit,
         title = _ref.title,
         storeName = _ref.storeName;
+
+
     return _react2.default.createElement(
         "li",
         { className: "items-list-item" },
@@ -24956,6 +24967,14 @@ function itemsList() {
             return updatedItems;
 
         case 'SAVE_ITEM':
+            var updatedSaveItems = state.map(function (item) {
+                console.log(action.title);
+                if (item.id === action.id) {
+                    return _extends({}, item, { title: action.title, storeName: action.storeName });
+                }
+                return item;
+            });
+            return updatedSaveItems;
 
         default:
             return state;
@@ -25067,6 +25086,10 @@ var _Item = __webpack_require__(234);
 
 var _Item2 = _interopRequireDefault(_Item);
 
+var _ItemEditMode = __webpack_require__(260);
+
+var _ItemEditMode2 = _interopRequireDefault(_ItemEditMode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 __webpack_require__(254);
@@ -25075,21 +25098,33 @@ var ItemsList = function ItemsList(_ref) {
     var itemsList = _ref.itemsList,
         removeItem = _ref.removeItem,
         editItem = _ref.editItem;
+
+
+    var items = itemsList.map(function (item) {
+        var displayItem = _react2.default.createElement(_Item2.default, _extends({
+            key: item.id
+        }, item, {
+            onClickRemove: function onClickRemove() {
+                return removeItem(item.id);
+            },
+            onClickEdit: function onClickEdit() {
+                return editItem(item.id);
+            }
+        }));
+
+        if (item.editMode) {
+            displayItem = _react2.default.createElement(_ItemEditMode2.default, _extends({
+                key: item.id
+            }, item));
+        }
+
+        return displayItem;
+    });
+
     return _react2.default.createElement(
         'ul',
         { className: 'items-list' },
-        itemsList.map(function (item) {
-            return _react2.default.createElement(_Item2.default, _extends({
-                key: item.id
-            }, item, {
-                onClickRemove: function onClickRemove() {
-                    return removeItem(item.id);
-                },
-                onClickEdit: function onClickEdit() {
-                    return editItem(item.id);
-                }
-            }));
-        })
+        items
     );
 };
 
@@ -25242,6 +25277,120 @@ var DeletePostModal = function DeletePostModal(_ref) {
 };
 
 exports.default = (0, _reactRedux.connect)()(DeletePostModal);
+
+/***/ }),
+/* 259 */,
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Editor = __webpack_require__(263);
+
+var _Editor2 = _interopRequireDefault(_Editor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ItemEditMode = function ItemEditMode(_ref) {
+    var id = _ref.id,
+        title = _ref.title,
+        storeName = _ref.storeName;
+
+
+    return _react2.default.createElement(
+        'li',
+        { className: 'items-list-item' },
+        _react2.default.createElement(_Editor2.default, {
+            id: id,
+            editorType: 'edit',
+            title: title,
+            storeName: storeName
+        })
+    );
+};
+
+exports.default = ItemEditMode;
+
+/***/ }),
+/* 261 */,
+/* 262 */,
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(34);
+
+var _actions = __webpack_require__(231);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Editor = function Editor(_ref) {
+    var dispatch = _ref.dispatch,
+        editorType = _ref.editorType,
+        id = _ref.id,
+        title = _ref.title,
+        storeName = _ref.storeName;
+
+    var input = void 0,
+        storeNameInput = void 0;
+
+    return _react2.default.createElement(
+        'form',
+        { className: 'form-add-item',
+            onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                if (!input.value.trim()) {
+                    return;
+                }
+                dispatch((0, _actions.saveItem)(id, input.value, storeNameInput.value));
+                input.value = '';
+                storeNameInput.value = '';
+            }
+        },
+        _react2.default.createElement(
+            'label',
+            { htmlFor: 'title' },
+            'Title:',
+            _react2.default.createElement('input', { ref: function ref(node) {
+                    return input = node;
+                }, name: 'title', defaultValue: title })
+        ),
+        _react2.default.createElement(
+            'label',
+            { htmlFor: 'store-name' },
+            'Store name:',
+            _react2.default.createElement('input', { ref: function ref(node) {
+                    return storeNameInput = node;
+                }, name: 'store-name', defaultValue: storeName })
+        ),
+        _react2.default.createElement(
+            'button',
+            { type: 'submit' },
+            editorType == 'edit' ? 'Save' : 'Add post'
+        )
+    );
+};
+
+exports.default = (0, _reactRedux.connect)()(Editor);
 
 /***/ })
 /******/ ]);
