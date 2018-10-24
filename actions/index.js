@@ -29,6 +29,13 @@ export const saveItem = (id, title, storeName) => ({
     storeName
 })
 
+export const openAddNewEditor = () => ({
+    type: 'OPEN_ADD_NEW_EDITOR'
+})
+
+export const closeAddNewEditor = () => ({
+    type: 'CLOSE_ADD_NEW_EDITOR'
+})
 
 export const showModal = (id, modalType, modalProps) => ({
     type: 'SHOW_MODAL',

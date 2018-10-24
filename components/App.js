@@ -1,5 +1,5 @@
 import React from 'react'
-import AddItem from '../containers/AddItem/';
+import AddNewPost from '../containers/AddNewPost/';
 import VisibleItemsList from '../containers/VisibleItemsList';
 import Modal from '../containers/Modals/Modal';
 
@@ -9,7 +9,7 @@ const App = () => (
     <div>
         <div className="section-items-list">
             <div className="container">
-                <AddItem/>
+                <AddNewPost/>
 
                 <h3>Items list</h3>
                 <VisibleItemsList/>

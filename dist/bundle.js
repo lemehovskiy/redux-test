@@ -24391,9 +24391,9 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddItem = __webpack_require__(250);
+var _AddNewPost = __webpack_require__(265);
 
-var _AddItem2 = _interopRequireDefault(_AddItem);
+var _AddNewPost2 = _interopRequireDefault(_AddNewPost);
 
 var _VisibleItemsList = __webpack_require__(232);
 
@@ -24417,7 +24417,7 @@ var App = function App() {
             _react2.default.createElement(
                 'div',
                 { className: 'container' },
-                _react2.default.createElement(_AddItem2.default, null),
+                _react2.default.createElement(_AddNewPost2.default, null),
                 _react2.default.createElement(
                     'h3',
                     null,
@@ -24482,6 +24482,18 @@ var saveItem = exports.saveItem = function saveItem(id, title, storeName) {
         id: id,
         title: title,
         storeName: storeName
+    };
+};
+
+var openAddNewEditor = exports.openAddNewEditor = function openAddNewEditor() {
+    return {
+        type: 'OPEN_ADD_NEW_EDITOR'
+    };
+};
+
+var closeAddNewEditor = exports.closeAddNewEditor = function closeAddNewEditor() {
+    return {
+        type: 'CLOSE_ADD_NEW_EDITOR'
     };
 };
 
@@ -24921,10 +24933,14 @@ var _modal = __webpack_require__(256);
 
 var _modal2 = _interopRequireDefault(_modal);
 
+var _addNewEditor = __webpack_require__(264);
+
+var _addNewEditor2 = _interopRequireDefault(_addNewEditor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
-  itemsList: _item2.default, modal: _modal2.default
+  itemsList: _item2.default, modal: _modal2.default, addNewEditor: _addNewEditor2.default
 });
 
 exports.default = rootReducer;
@@ -25005,84 +25021,8 @@ function itemsList() {
 /* 247 */,
 /* 248 */,
 /* 249 */,
-/* 250 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(13);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(34);
-
-var _actions = __webpack_require__(231);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-__webpack_require__(251);
-
-var AddItem = function AddItem(_ref) {
-    var dispatch = _ref.dispatch;
-
-    var input = void 0,
-        storeNameInput = void 0;
-
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-            'form',
-            { className: 'form-add-item',
-                onSubmit: function onSubmit(e) {
-                    e.preventDefault();
-                    if (!input.value.trim()) {
-                        return;
-                    }
-                    dispatch((0, _actions.addItem)(input.value, storeNameInput.value));
-                    input.value = '';
-                    storeNameInput.value = '';
-                }
-            },
-            _react2.default.createElement(
-                'label',
-                { htmlFor: 'title' },
-                'Title:',
-                _react2.default.createElement('input', { ref: function ref(node) {
-                        return input = node;
-                    }, name: 'title' })
-            ),
-            _react2.default.createElement(
-                'label',
-                { htmlFor: 'store-name' },
-                'Store name:',
-                _react2.default.createElement('input', { ref: function ref(node) {
-                        return storeNameInput = node;
-                    }, name: 'store-name' })
-            ),
-            _react2.default.createElement(
-                'button',
-                { type: 'submit' },
-                'Add Todo'
-            )
-        )
-    );
-};
-
-exports.default = (0, _reactRedux.connect)()(AddItem);
-
-/***/ }),
-/* 251 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 250 */,
+/* 251 */,
 /* 252 */,
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -25383,10 +25323,14 @@ var Editor = function Editor(_ref) {
                 if (!input.value.trim()) {
                     return;
                 }
-                dispatch((0, _actions.saveItem)(id, input.value, storeNameInput.value));
-                dispatch((0, _actions.closeItemEditor)(id));
-                input.value = '';
-                storeNameInput.value = '';
+                if (editorType === 'edit') {
+                    dispatch((0, _actions.saveItem)(id, input.value, storeNameInput.value));
+                    dispatch((0, _actions.closeItemEditor)(id));
+                } else if (editorType === 'addNew') {
+                    dispatch((0, _actions.addItem)(input.value, storeNameInput.value));
+                    input.value = '';
+                    storeNameInput.value = '';
+                }
             }
         },
         _react2.default.createElement(
@@ -25408,7 +25352,118 @@ var Editor = function Editor(_ref) {
         _react2.default.createElement(
             'button',
             { type: 'submit' },
-            editorType == 'edit' ? 'Save' : 'Add post'
+            editorType === 'edit' ? 'Save' : 'Add post'
+        ),
+        editorType === 'edit' ? _react2.default.createElement(
+            'button',
+            { type: 'button', onClick: onClickClose },
+            'Close'
+        ) : ''
+    );
+};
+
+exports.default = (0, _reactRedux.connect)()(Editor);
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = modal;
+var initialState = {
+    isOpen: false
+};
+
+function modal() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case 'OPEN_ADD_NEW_EDITOR':
+            return {
+                isOpen: true
+            };
+        case 'CLOSE_ADD_NEW_EDITOR':
+            return initialState;
+        default:
+            return state;
+    }
+}
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(34);
+
+var _actions = __webpack_require__(231);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(266);
+
+var AddNewPost = function AddNewPost(_ref) {
+    var dispatch = _ref.dispatch,
+        isOpen = _ref.isOpen;
+
+
+    var input = void 0,
+        storeNameInput = void 0;
+
+    function onClickClose() {
+        dispatch((0, _actions.closeAddNewEditor)());
+    }
+
+    var form = _react2.default.createElement(
+        'form',
+        { className: 'form-add-item',
+            onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                if (!input.value.trim()) {
+                    return;
+                }
+
+                dispatch((0, _actions.addItem)(input.value, storeNameInput.value));
+                input.value = '';
+                storeNameInput.value = '';
+            }
+        },
+        _react2.default.createElement(
+            'label',
+            { htmlFor: 'title' },
+            'Title:',
+            _react2.default.createElement('input', { ref: function ref(node) {
+                    return input = node;
+                }, name: 'title' })
+        ),
+        _react2.default.createElement(
+            'label',
+            { htmlFor: 'store-name' },
+            'Store name:',
+            _react2.default.createElement('input', { ref: function ref(node) {
+                    return storeNameInput = node;
+                }, name: 'store-name' })
+        ),
+        _react2.default.createElement(
+            'button',
+            { type: 'submit' },
+            'Add post'
         ),
         _react2.default.createElement(
             'button',
@@ -25416,9 +25471,23 @@ var Editor = function Editor(_ref) {
             'Close'
         )
     );
+
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('div', { className: 'controls' })
+    );
 };
 
-exports.default = (0, _reactRedux.connect)()(Editor);
+exports.default = (0, _reactRedux.connect)(function (state) {
+    return state.addNewEditor;
+})(AddNewPost);
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -6,7 +6,7 @@ const Editor = ({dispatch, editorType, id, title, storeName}) => {
     let input,
         storeNameInput;
 
-    function onClickClose(){
+    function onClickClose() {
         dispatch(closeItemEditor(id))
     }
 
@@ -17,10 +17,15 @@ const Editor = ({dispatch, editorType, id, title, storeName}) => {
                   if (!input.value.trim()) {
                     return
                   }
-                  dispatch(saveItem(id, input.value, storeNameInput.value));
-                  dispatch(closeItemEditor(id));
-                  input.value = '';
-                  storeNameInput.value = '';
+                  if (editorType === 'edit') {
+                      dispatch(saveItem(id, input.value, storeNameInput.value));
+                      dispatch(closeItemEditor(id));
+                  }
+                  else if (editorType === 'addNew'){
+                      dispatch(addItem(input.value, storeNameInput.value));
+                      input.value = '';
+                      storeNameInput.value = '';
+                  }
                 }}
         >
             <label htmlFor="title">
@@ -32,9 +37,9 @@ const Editor = ({dispatch, editorType, id, title, storeName}) => {
                 <input ref={node => storeNameInput = node} name="store-name" defaultValue={storeName}/>
             </label>
             <button type="submit">
-                {editorType == 'edit' ? 'Save' : 'Add post'}
+                {editorType === 'edit' ? 'Save' : 'Add post'}
             </button>
-            <button type="button" onClick={onClickClose}>Close</button>
+            {editorType === 'edit' ? <button type="button" onClick={onClickClose}>Close</button> : ''}
         </form>
     );
 }
