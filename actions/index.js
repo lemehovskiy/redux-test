@@ -1,11 +1,24 @@
 let nextTodoId = 2;
 
-export const addItem = (title, storeName) => ({
-    type: 'ADD_ITEM',
-    id: nextTodoId++,
-    title,
-    storeName
-})
+export const addItem = (post) => {
+    return(dispatch, getState, { getFirestore }) => {
+        // make async call to database
+        const firestore = getFirestore();
+
+        firestore.collection('post_list').add({
+            ...post
+        }).then(() => {
+            dispatch({
+                type: 'ADD_ITEM',
+                post
+            })
+        }).catch((err) => {
+            console.log('error');
+            console.log(err)
+            // dispatch({type: 'CREATE_PROJECT_ERROR', err})
+        });
+    }
+}
 
 export const removeItem = (id) => ({
     type: 'REMOVE_ITEM',
