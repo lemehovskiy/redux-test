@@ -32399,9 +32399,9 @@ var _AddNewPost = __webpack_require__(390);
 
 var _AddNewPost2 = _interopRequireDefault(_AddNewPost);
 
-var _VisibleItemsList = __webpack_require__(392);
+var _ItemsList = __webpack_require__(601);
 
-var _VisibleItemsList2 = _interopRequireDefault(_VisibleItemsList);
+var _ItemsList2 = _interopRequireDefault(_ItemsList);
 
 var _Modal = __webpack_require__(398);
 
@@ -32427,7 +32427,7 @@ var App = function App() {
                     null,
                     'Items list'
                 ),
-                _react2.default.createElement(_VisibleItemsList2.default, null)
+                _react2.default.createElement(_ItemsList2.default, null)
             )
         ),
         _react2.default.createElement(_Modal2.default, null)
@@ -32576,115 +32576,8 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 392 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _reactRedux = __webpack_require__(40);
-
-var _ItemsList = __webpack_require__(393);
-
-var _ItemsList2 = _interopRequireDefault(_ItemsList);
-
-var _actions = __webpack_require__(75);
-
-var _reactReduxFirebase = __webpack_require__(551);
-
-var _redux = __webpack_require__(73);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-    console.log(state.firestore.ordered.post_list);
-    return {
-        itemsList: state.firestore.ordered.post_list
-    };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return {
-        removeItem: function removeItem(id) {
-            return dispatch((0, _actions.showModal)('SHOW_MODAL', 'DELETE_POST', { postId: id }));
-        },
-        openItemEditor: function openItemEditor(id) {
-            return dispatch((0, _actions.openItemEditor)(id));
-        }
-    };
-};
-
-exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps), (0, _reactReduxFirebase.firestoreConnect)([{ collection: 'post_list' }]))(_ItemsList2.default);
-
-/***/ }),
-/* 393 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(10);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Item = __webpack_require__(394);
-
-var _Item2 = _interopRequireDefault(_Item);
-
-var _ItemEditMode = __webpack_require__(395);
-
-var _ItemEditMode2 = _interopRequireDefault(_ItemEditMode);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-__webpack_require__(397);
-
-var ItemsList = function ItemsList(_ref) {
-    var itemsList = _ref.itemsList,
-        removeItem = _ref.removeItem,
-        openItemEditor = _ref.openItemEditor;
-
-    var items = itemsList && itemsList.map(function (item) {
-        var displayItem = _react2.default.createElement(_Item2.default, _extends({
-            key: item.id
-        }, item, {
-            onClickRemove: function onClickRemove() {
-                return removeItem(item.id);
-            },
-            onClickEdit: function onClickEdit() {
-                return openItemEditor(item.id);
-            }
-        }));
-
-        if (item.editMode) {
-            displayItem = _react2.default.createElement(_ItemEditMode2.default, _extends({
-                key: item.id
-            }, item));
-        }
-
-        return displayItem;
-    });
-
-    return _react2.default.createElement(
-        'ul',
-        { className: 'items-list' },
-        items
-    );
-};
-
-exports.default = ItemsList;
-
-/***/ }),
+/* 392 */,
+/* 393 */,
 /* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32868,12 +32761,7 @@ var Editor = function Editor(_ref) {
 exports.default = (0, _reactRedux.connect)()(Editor);
 
 /***/ }),
-/* 397 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 397 */,
 /* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68489,6 +68377,108 @@ function unregister() {
   }
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */,
+/* 600 */,
+/* 601 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(40);
+
+var _actions = __webpack_require__(75);
+
+var _reactReduxFirebase = __webpack_require__(551);
+
+var _redux = __webpack_require__(73);
+
+var _Item = __webpack_require__(394);
+
+var _Item2 = _interopRequireDefault(_Item);
+
+var _ItemEditMode = __webpack_require__(395);
+
+var _ItemEditMode2 = _interopRequireDefault(_ItemEditMode);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(602);
+
+var ItemsList = function ItemsList(_ref) {
+    var itemsList = _ref.itemsList,
+        removeItem = _ref.removeItem,
+        openItemEditor = _ref.openItemEditor;
+
+    var items = itemsList && itemsList.map(function (item) {
+        var displayItem = _react2.default.createElement(_Item2.default, _extends({
+            key: item.id
+        }, item, {
+            onClickRemove: function onClickRemove() {
+                return removeItem(item.id);
+            },
+            onClickEdit: function onClickEdit() {
+                return openItemEditor(item.id);
+            }
+        }));
+
+        if (item.editMode) {
+            displayItem = _react2.default.createElement(_ItemEditMode2.default, _extends({
+                key: item.id
+            }, item));
+        }
+
+        return displayItem;
+    });
+
+    return _react2.default.createElement(
+        'ul',
+        { className: 'items-list' },
+        items
+    );
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+    console.log(state.firestore.ordered.post_list);
+    return {
+        itemsList: state.firestore.ordered.post_list
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        removeItem: function removeItem(id) {
+            return dispatch((0, _actions.showModal)('SHOW_MODAL', 'DELETE_POST', { postId: id }));
+        },
+        openItemEditor: function openItemEditor(id) {
+            return dispatch((0, _actions.openItemEditor)(id));
+        }
+    };
+};
+
+exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps), (0, _reactReduxFirebase.firestoreConnect)([{ collection: 'post_list' }]))(ItemsList);
+
+/***/ }),
+/* 602 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

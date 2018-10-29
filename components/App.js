@@ -1,6 +1,6 @@
 import React from 'react'
 import AddNewPost from '../containers/AddNewPost/';
-import VisibleItemsList from '../containers/VisibleItemsList';
+import ItemsList from '../containers/ItemsList';
 import Modal from '../containers/Modals/Modal';
 
 require('../src/sass/style.scss');
@@ -12,7 +12,7 @@ const App = () => (
                 <AddNewPost/>
 
                 <h3>Items list</h3>
-                <VisibleItemsList/>
+                <ItemsList/>
             </div>
         </div>
 
