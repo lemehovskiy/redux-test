@@ -13,7 +13,6 @@ export const addItem = (post) => {
                 post
             })
         }).catch((err) => {
-            console.log('error');
             console.log(err)
             // dispatch({type: 'CREATE_PROJECT_ERROR', err})
         });

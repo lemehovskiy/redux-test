@@ -6343,7 +6343,6 @@ var addItem = exports.addItem = function addItem(post) {
                 post: post
             });
         }).catch(function (err) {
-            console.log('error');
             console.log(err);
             // dispatch({type: 'CREATE_PROJECT_ERROR', err})
         });
@@ -32586,11 +32585,16 @@ var _ItemsList2 = _interopRequireDefault(_ItemsList);
 
 var _actions = __webpack_require__(75);
 
+var _reactReduxFirebase = __webpack_require__(551);
+
+var _redux = __webpack_require__(73);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
+    console.log(state.firestore.ordered.post_list);
     return {
-        itemsList: state.itemsList
+        itemsList: state.firestore.ordered.post_list
     };
 };
 
@@ -32605,7 +32609,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ItemsList2.default);
+exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps), (0, _reactReduxFirebase.firestoreConnect)([{ collection: 'post_list' }]))(_ItemsList2.default);
 
 /***/ }),
 /* 393 */
@@ -32641,7 +32645,7 @@ var ItemsList = function ItemsList(_ref) {
         removeItem = _ref.removeItem,
         openItemEditor = _ref.openItemEditor;
 
-    var items = itemsList.map(function (item) {
+    var items = itemsList && itemsList.map(function (item) {
         var displayItem = _react2.default.createElement(_Item2.default, _extends({
             key: item.id
         }, item, {

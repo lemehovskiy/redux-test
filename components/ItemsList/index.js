@@ -4,7 +4,7 @@ import ItemEditMode from './../ItemEditMode'
 require('./style.scss');
 
 const ItemsList = ({itemsList, removeItem, openItemEditor}) => {
-    let items = itemsList.map((item) => {
+    let items = itemsList && itemsList.map((item) => {
         let displayItem = <Item
             key={item.id}
             {...item}
