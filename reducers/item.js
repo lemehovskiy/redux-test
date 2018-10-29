@@ -6,8 +6,16 @@ export default function itemsList(state = [], action) {
         case 'ADD_ITEM':
             return state;
 
+        case 'ADD_ITEM_ERROR':
+            console.log('ADD_ITEM_ERROR', action.err)
+            return state;
+
         case 'REMOVE_ITEM':
-            return state.filter(itemsList => itemsList.id !== action.id);
+            return state;
+
+        case 'REMOVE_ITEM_ERROR':
+            console.log('REMOVE_ITEM_ERROR', action.err)
+            return state;
 
         case 'OPEN_ITEM_EDITOR':
             updatedItems = state.map(item => {

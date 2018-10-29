@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
         {collection: 'post_list'}
     ])

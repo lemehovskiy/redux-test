@@ -13,16 +13,26 @@ export const addItem = (post) => {
                 post
             })
         }).catch((err) => {
-            console.log(err)
-            // dispatch({type: 'CREATE_PROJECT_ERROR', err})
+            dispatch({type: 'ADD_ITEM_ERROR', err})
         });
     }
 }
 
-export const removeItem = (id) => ({
-    type: 'REMOVE_ITEM',
-    id: id
-})
+export const removeItem = (id) => {
+    return(dispatch, getState, { getFirestore }) => {
+
+        const firestore = getFirestore();
+
+        firestore.collection('post_list').doc(id).delete()
+            .then(() => {
+                dispatch({
+                    type: 'REMOVE_ITEM'
+                })
+        }).catch((err) => {
+            dispatch({type: 'REMOVE_ITEM_ERROR', err})
+        });
+    }
+}
 
 export const openItemEditor = (id) => ({
     type: 'OPEN_ITEM_EDITOR',

@@ -6343,16 +6343,25 @@ var addItem = exports.addItem = function addItem(post) {
                 post: post
             });
         }).catch(function (err) {
-            console.log(err);
-            // dispatch({type: 'CREATE_PROJECT_ERROR', err})
+            dispatch({ type: 'ADD_ITEM_ERROR', err: err });
         });
     };
 };
 
 var removeItem = exports.removeItem = function removeItem(id) {
-    return {
-        type: 'REMOVE_ITEM',
-        id: id
+    return function (dispatch, getState, _ref2) {
+        var getFirestore = _ref2.getFirestore;
+
+
+        var firestore = getFirestore();
+
+        firestore.collection('post_list').doc(id).delete().then(function () {
+            dispatch({
+                type: 'REMOVE_ITEM'
+            });
+        }).catch(function (err) {
+            dispatch({ type: 'REMOVE_ITEM_ERROR', err: err });
+        });
     };
 };
 
@@ -32609,7 +32618,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 
-exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps), (0, _reactReduxFirebase.firestoreConnect)([{ collection: 'post_list' }]))(_ItemsList2.default);
+exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps), (0, _reactReduxFirebase.firestoreConnect)([{ collection: 'post_list' }]))(_ItemsList2.default);
 
 /***/ }),
 /* 393 */
@@ -33075,10 +33084,16 @@ function itemsList() {
         case 'ADD_ITEM':
             return state;
 
+        case 'ADD_ITEM_ERROR':
+            console.log('ADD_ITEM_ERROR', action.err);
+            return state;
+
         case 'REMOVE_ITEM':
-            return state.filter(function (itemsList) {
-                return itemsList.id !== action.id;
-            });
+            return state;
+
+        case 'REMOVE_ITEM_ERROR':
+            console.log('REMOVE_ITEM_ERROR', action.err);
+            return state;
 
         case 'OPEN_ITEM_EDITOR':
             updatedItems = state.map(function (item) {
