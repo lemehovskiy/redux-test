@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {showModal, openItemEditor} from "../../actions/";
 import { firestoreConnect } from 'react-redux-firebase';
@@ -8,34 +8,48 @@ import ItemEditMode from './../../components/ItemEditMode'
 require('./style.scss');
 
 
-const ItemsList = ({itemsList, removeItem, openItemEditor}) => {
-    let items = itemsList && itemsList.map((item) => {
-            let displayItem = <Item
-                key={item.id}
-                {...item}
-                onClickRemove={()=> removeItem(item.id)}
-                onClickEdit={()=> openItemEditor(item.id)}
-            />
 
-            if (item.editMode) {
-                displayItem = <ItemEditMode
+class ItemsList extends Component {
+
+    state = {
+        itemsInEditMode: []
+    }
+
+    handleItemEditMode(id){
+        this.setState((state) => {
+            itemsInEditMode: state.itemsInEditMode.push(id);
+        })
+    }
+
+    render(){
+
+        let items = this.props.itemsList && this.props.itemsList.map((item) => {
+                let displayItem = <Item
                     key={item.id}
                     {...item}
+                    onClickRemove={()=> this.props.removeItem(item.id)}
+                    onClickEdit={()=> this.handleItemEditMode(item.id)}
                 />
-            }
 
-            return displayItem;
-        })
+                if (this.state.itemsInEditMode.includes(item.id)) {
+                    displayItem = <ItemEditMode
+                        key={item.id}
+                        {...item}
+                    />
+                }
 
-    return (
-        <ul className="items-list">
-            {items}
-        </ul>
-    )
+                return displayItem;
+            })
+
+        return (
+            <ul className="items-list">
+                {items}
+            </ul>
+        )
+    }
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.firestore.ordered.post_list);
     return {
         itemsList: state.firestore.ordered.post_list
     }
