@@ -1,4 +1,8 @@
-export default function itemsList(state = [], action) {
+const initialState = {
+    itemsInEditMode: []
+};
+
+export default function itemsList(state = initialState, action) {
     let updatedItems = [];
 
     switch (action.type) {
@@ -18,22 +22,17 @@ export default function itemsList(state = [], action) {
             return state;
 
         case 'OPEN_ITEM_EDITOR':
-            updatedItems = state.map(item => {
-                if (item.id === action.id) {
-                    return {...item, editMode: true}
-                }
-                return item
-            })
-            return updatedItems
+            console.log(state);
+            return {itemsInEditMode: [...state.itemsInEditMode, action.id]}
 
         case 'CLOSE_ITEM_EDITOR':
-            updatedItems = state.map(item => {
-                if (item.id === action.id) {
-                    return {...item, editMode: false}
-                }
-                return item
-            })
-            return updatedItems
+            let index = state.itemsInEditMode.indexOf(action.id);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+
+            updatedItems = state.itemsInEditMode.push(action.id)
+            return updatedItems;
 
         case 'SAVE_ITEM':
             updatedItems = state.map(item => {

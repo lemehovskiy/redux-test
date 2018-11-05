@@ -11,16 +11,6 @@ require('./style.scss');
 
 class ItemsList extends Component {
 
-    state = {
-        itemsInEditMode: []
-    }
-
-    handleItemEditMode(id){
-        this.setState((state) => {
-            itemsInEditMode: state.itemsInEditMode.push(id);
-        })
-    }
-
     render(){
 
         let items = this.props.itemsList && this.props.itemsList.map((item) => {
@@ -28,15 +18,8 @@ class ItemsList extends Component {
                     key={item.id}
                     {...item}
                     onClickRemove={()=> this.props.removeItem(item.id)}
-                    onClickEdit={()=> this.handleItemEditMode(item.id)}
+                    onClickEdit={()=> this.props.openItemEditor(item.id)}
                 />
-
-                if (this.state.itemsInEditMode.includes(item.id)) {
-                    displayItem = <ItemEditMode
-                        key={item.id}
-                        {...item}
-                    />
-                }
 
                 return displayItem;
             })

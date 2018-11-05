@@ -19180,9 +19180,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _redux = __webpack_require__(67);
 
-var _index = __webpack_require__(297);
+var _rootReducer = __webpack_require__(598);
 
-var _index2 = _interopRequireDefault(_index);
+var _rootReducer2 = _interopRequireDefault(_rootReducer);
 
 var _reactDom = __webpack_require__(475);
 
@@ -19212,7 +19212,7 @@ var _fbConfig2 = _interopRequireDefault(_fbConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_index2.default, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default.withExtraArgument({ getFirebase: _reactReduxFirebase.getFirebase, getFirestore: _reduxFirestore.getFirestore })), (0, _reduxFirestore.reduxFirestore)(_fbConfig2.default), (0, _reactReduxFirebase.reactReduxFirebase)(_fbConfig2.default, { attachAuthIsReady: true })));
+var store = (0, _redux.createStore)(_rootReducer2.default, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default.withExtraArgument({ getFirebase: _reactReduxFirebase.getFirebase, getFirestore: _reduxFirestore.getFirestore })), (0, _reduxFirestore.reduxFirestore)(_fbConfig2.default), (0, _reactReduxFirebase.reactReduxFirebase)(_fbConfig2.default, { attachAuthIsReady: true })));
 
 _reactDom2.default.render(_react2.default.createElement(
     _reactRedux.Provider,
@@ -21783,45 +21783,7 @@ function applyMiddleware() {
 }
 
 /***/ }),
-/* 297 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _redux = __webpack_require__(67);
-
-var _item = __webpack_require__(298);
-
-var _item2 = _interopRequireDefault(_item);
-
-var _modal = __webpack_require__(299);
-
-var _modal2 = _interopRequireDefault(_modal);
-
-var _addNewEditor = __webpack_require__(300);
-
-var _addNewEditor2 = _interopRequireDefault(_addNewEditor);
-
-var _reduxFirestore = __webpack_require__(171);
-
-var _reactReduxFirebase = __webpack_require__(139);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var rootReducer = (0, _redux.combineReducers)({
-  itemsList: _item2.default, modal: _modal2.default, addNewEditor: _addNewEditor2.default,
-  firestore: _reduxFirestore.firestoreReducer,
-  firebase: _reactReduxFirebase.firebaseReducer
-});
-
-exports.default = rootReducer;
-
-/***/ }),
+/* 297 */,
 /* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21835,8 +21797,15 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.default = itemsList;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var initialState = {
+    itemsInEditMode: []
+};
+
 function itemsList() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
 
     var updatedItems = [];
@@ -21858,21 +21827,16 @@ function itemsList() {
             return state;
 
         case 'OPEN_ITEM_EDITOR':
-            updatedItems = state.map(function (item) {
-                if (item.id === action.id) {
-                    return _extends({}, item, { editMode: true });
-                }
-                return item;
-            });
-            return updatedItems;
+            console.log(state);
+            return { itemsInEditMode: [].concat(_toConsumableArray(state.itemsInEditMode), [action.id]) };
 
         case 'CLOSE_ITEM_EDITOR':
-            updatedItems = state.map(function (item) {
-                if (item.id === action.id) {
-                    return _extends({}, item, { editMode: false });
-                }
-                return item;
-            });
+            var index = state.itemsInEditMode.indexOf(action.id);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+
+            updatedItems = state.itemsInEditMode.push(action.id);
             return updatedItems;
 
         case 'SAVE_ITEM':
@@ -42259,29 +42223,12 @@ var ItemsList = function (_Component) {
     _inherits(ItemsList, _Component);
 
     function ItemsList() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
         _classCallCheck(this, ItemsList);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ItemsList.__proto__ || Object.getPrototypeOf(ItemsList)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            itemsInEditMode: []
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        return _possibleConstructorReturn(this, (ItemsList.__proto__ || Object.getPrototypeOf(ItemsList)).apply(this, arguments));
     }
 
     _createClass(ItemsList, [{
-        key: 'handleItemEditMode',
-        value: function handleItemEditMode(id) {
-            this.setState(function (state) {
-                itemsInEditMode: state.itemsInEditMode.push(id);
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -42294,15 +42241,9 @@ var ItemsList = function (_Component) {
                         return _this2.props.removeItem(item.id);
                     },
                     onClickEdit: function onClickEdit() {
-                        return _this2.handleItemEditMode(item.id);
+                        return _this2.props.openItemEditor(item.id);
                     }
                 }));
-
-                if (_this2.state.itemsInEditMode.includes(item.id)) {
-                    displayItem = _react2.default.createElement(_ItemEditMode2.default, _extends({
-                        key: item.id
-                    }, item));
-                }
 
                 return displayItem;
             });
@@ -68505,6 +68446,51 @@ Y(sg.prototype,{toJSON:{name:"toJSON",j:[V(null,!0)]}});Y(Hm.prototype,{clear:{n
 c){a=new Xl(a);c({INTERNAL:{getUid:r(a.getUid,a),getToken:r(a.bc,a),addAuthTokenListener:r(a.Ub,a),removeAuthTokenListener:r(a.Bc,a)}});return a},a,function(a,c){if("create"===a)try{c.auth()}catch(d){}});__WEBPACK_IMPORTED_MODULE_0__firebase_app___default.a.INTERNAL.extendNamespace({User:Q})}else throw Error("Cannot find the firebase namespace; be sure to include firebase-app.js before this library.");})();
 }).apply(typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : typeof window !== 'undefined' ? window : {});
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(23)))
+
+/***/ }),
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(67);
+
+var _item = __webpack_require__(298);
+
+var _item2 = _interopRequireDefault(_item);
+
+var _modal = __webpack_require__(299);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _addNewEditor = __webpack_require__(300);
+
+var _addNewEditor2 = _interopRequireDefault(_addNewEditor);
+
+var _reduxFirestore = __webpack_require__(171);
+
+var _reactReduxFirebase = __webpack_require__(139);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var rootReducer = (0, _redux.combineReducers)({
+  itemsList: _item2.default, modal: _modal2.default, addNewEditor: _addNewEditor2.default,
+  firestore: _reduxFirestore.firestoreReducer,
+  firebase: _reactReduxFirebase.firebaseReducer
+});
+
+exports.default = rootReducer;
 
 /***/ })
 /******/ ]);
