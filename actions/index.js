@@ -1,19 +1,17 @@
-let nextTodoId = 2;
-
-export const addItem = (post) => {
+export const addPost = (post) => {
     return(dispatch, getState, { getFirestore }) => {
         // make async call to database
         const firestore = getFirestore();
 
         firestore.collection('post_list').add({
-            ...post
+            ...post, date: firestore.FieldValue.serverTimestamp()
         }).then(() => {
             dispatch({
-                type: 'ADD_ITEM',
+                type: 'ADD_POST',
                 post
             })
         }).catch((err) => {
-            dispatch({type: 'ADD_ITEM_ERROR', err})
+            dispatch({type: 'ADD_POST_ERROR', err})
         });
     }
 }

@@ -1,54 +1,68 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {addItem, openAddNewEditor, closeAddNewEditor} from '../../actions'
+import {addPost} from '../../actions'
 require('./style.scss');
 
 
 class AddNewPost extends Component {
     state = {
-        title: ''
+        name: '',
+        zip: ''
     }
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+
+        console.log(this.state);
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.addItem(this.state);
-    }
-    onClickClose =() => {
-        this.props.onClickClose();
-    }
-    onClickOpen =() => {
-        this.props.onClickOpen();
+        this.props.addPost(this.state);
+
+        for (let i = 0; i < 1900; i++){
+            this.props.addPost({
+                title:  Math.floor(Math.random() * 2000) + 1,
+            });
+        }
     }
 
+
     render() {
-        const form =
+
+        return (
             <form className="form-add-item" onSubmit={this.handleSubmit}>
                 <label htmlFor="title">
                     Title:
                     <input name="title" onChange={this.handleChange}/>
                 </label>
-                <div className="button-group">
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={this.onClickClose}>Cancel</button>
+                <label htmlFor="zip">
+                    Zip:
+                    <input name="zip" onChange={this.handleChange}/>
+                </label>
+
+                <div className="radio-group">
+                    <label>
+                        Icon type 1
+                        <input type="radio" value="option-1" name="icon-type" onChange={this.handleChange}/>
+                    </label>
+                    <label>
+                        Icon type 2
+                        <input type="radio" value="option-2" name="icon-type" onChange={this.handleChange}/>
+                    </label>
+                    <label>
+                        Icon type 3
+                        <input type="radio" value="option-3" name="icon-type" onChange={this.handleChange}/>
+                    </label>
                 </div>
-            </form>;
-
-        const openButton = <div>
-            <button type="button" onClick={this.onClickOpen}>Add new post</button>
-        </div>;
-
-        return (
-            <div className="section-add-item">
-                {this.props.addNewEditorIsOpen ? form : openButton}
-            </div>
+                <div className="button-group">
+                    <button type="submit">Send</button>
+                </div>
+            </form>
         )
     }
 }
@@ -61,9 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItem: (project) => dispatch(addItem(project)),
-        onClickClose: () => dispatch(closeAddNewEditor()),
-        onClickOpen: () => dispatch(openAddNewEditor())
+        addPost: (project) => dispatch(addPost(project))
     }
 }
 

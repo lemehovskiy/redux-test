@@ -1,8 +1,9 @@
 .items-list {
   padding: 20px 0 0;
   >li{
-    padding: 20px;
-    margin: 5px 0 0;
-    border: 2px solid #D7DCE2;
+    width: 10px;
+    height: 10px;
+    border: 2px solid black;
+    border-radius: 50%;
   }
 }

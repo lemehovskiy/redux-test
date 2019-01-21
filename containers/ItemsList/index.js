@@ -1,34 +1,56 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {showModal, openItemEditor} from "../../actions/";
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux'
+import {firestoreConnect} from 'react-redux-firebase';
+import {compose} from 'redux'
 import Item from './../../components/Item';
 import ItemEditMode from './../../components/ItemEditMode'
+import ReactTooltip from 'react-tooltip'
+
 require('./style.scss');
 
+
+import gridConfig from "./../../config/gridConfig.json";
 
 
 class ItemsList extends Component {
 
     state = {
-        itemsInEditMode: []
+        itemsInEditMode: [],
+        componentDidMount: false
     }
 
-    handleItemEditMode(id){
+    handleItemEditMode(id) {
         this.setState((state) => {
             itemsInEditMode: state.itemsInEditMode.push(id);
         })
     }
 
-    render(){
+    componentDidUpdate(){
+        ReactTooltip.rebuild()
+    }
 
-        let items = this.props.itemsList && this.props.itemsList.map((item) => {
+    render() {
+
+        // let conf = {gridConfig: []};
+        //
+        // for (let i = 0; i < 2000; i++){
+        //         conf.gridConfig.push([
+        //             Math.floor(Math.random() * 100) + 1,
+        //             Math.floor(Math.random() * 100) + 1
+        //         ])
+        // }
+        //
+        // console.log(conf);
+
+        let items = this.props.itemsList && this.props.itemsList.map((item, index) => {
+
                 let displayItem = <Item
                     key={item.id}
                     {...item}
-                    onClickRemove={()=> this.props.removeItem(item.id)}
-                    onClickEdit={()=> this.handleItemEditMode(item.id)}
+                    position={gridConfig[index]}
+                    data-tip
+                    data-for="sadFace"
                 />
 
                 if (this.state.itemsInEditMode.includes(item.id)) {
@@ -42,9 +64,15 @@ class ItemsList extends Component {
             })
 
         return (
-            <ul className="items-list">
-                {items}
-            </ul>
+            <div className="rect-outer">
+                <div className="rect-inner">
+
+
+                    {items}
+                    <ReactTooltip id='sadFace' aria-haspopup='true' role='example' getContent={(dataTip) => `This little buddy is ${dataTip.title}`}/>
+
+                </div>
+            </div>
         )
     }
 }
@@ -63,6 +91,6 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        {collection: 'post_list'}
+        {collection: 'post_list', orderBy: ['date', 'asc'], limit: 3}
     ])
 )(ItemsList)

@@ -2,6 +2,19 @@
   padding: 100px 200px;
 
 
+  .rect-outer {
+    position: relative;
+    padding: 100% 0 0;
+  }
+  .rect-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .items-list-item {
+    position: absolute;
+  }
 }
-
-
