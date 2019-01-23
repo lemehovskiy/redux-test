@@ -6,6 +6,7 @@ import {compose} from 'redux'
 import Item from './../../components/Item';
 import ItemEditMode from './../../components/ItemEditMode'
 import ReactTooltip from 'react-tooltip'
+import { TransitionGroup, Transition } from 'react-transition-group';
 
 require('./style.scss');
 
@@ -63,14 +64,15 @@ class ItemsList extends Component {
                 return displayItem;
             })
 
+        if (!this.props.itemsList) return <div></div>;
+
         return (
             <div className="rect-outer">
                 <div className="rect-inner">
 
-
-                    {items}
-                    <ReactTooltip id='sadFace' aria-haspopup='true' role='example' getContent={(dataTip) => `This little buddy is ${dataTip.title}`}/>
-
+                    <ul>
+                        {items}
+                    </ul>
                 </div>
             </div>
         )
@@ -91,6 +93,6 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        {collection: 'post_list', orderBy: ['date', 'asc'], limit: 3}
+        {collection: 'post_list', orderBy: ['date', 'asc'], limit: 10}
     ])
 )(ItemsList)
