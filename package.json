@@ -17,7 +17,6 @@
   },
   "homepage": "http://rackt.github.io/redux",
   "dependencies": {
-    "animejs": "^3.0.1",
     "prop-types": "^15.5.8",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -27,6 +26,7 @@
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
+    "animejs": "^3.0.1",
     "autoprefixer": "^9.2.1",
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",

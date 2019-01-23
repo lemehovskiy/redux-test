@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import ReactTooltip from 'react-tooltip'
+import anime from 'animejs';
 
 class Item extends React.Component {
     constructor() {
@@ -10,20 +11,20 @@ class Item extends React.Component {
         this.liRef = React.createRef();
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.animeRef = anime({
             targets: this.liRef.current,
             translateX: () => {
-                if( this.props.status == 'entering' ) {
+                if (this.props.status == 'entering') {
                     return ['-100%', '0%'];
-                } else if( this.props.status == 'exiting' ) {
+                } else if (this.props.status == 'exiting') {
                     return ['0%', '100%'];
                 }
             },
             elasticity: () => {
-                if( this.props.status == 'entering' ) {
+                if (this.props.status == 'entering') {
                     return 300;
-                } else if( this.props.status == 'exiting' ) {
+                } else if (this.props.status == 'exiting') {
                     return 0;
                 }
             },
@@ -38,9 +39,8 @@ class Item extends React.Component {
         }
 
         return (
-            <li className="list-item" ref={ this.liRef }>
-                <a className="items-list-item" style={positionElement} data-for='sadFace' data-tip={this.props.title}></a>
-            </li>
+            <li className="items-list-item" style={positionElement} data-for='sadFace' data-tip={this.props.title}
+                ref={ this.liRef }></li>
         );
     }
 }

@@ -43,36 +43,43 @@ class ItemsList extends Component {
         // }
         //
         // console.log(conf);
-
-        let items = this.props.itemsList && this.props.itemsList.map((item, index) => {
-
-                let displayItem = <Item
-                    key={item.id}
-                    {...item}
-                    position={gridConfig[index]}
-                    data-tip
-                    data-for="sadFace"
-                />
-
-                if (this.state.itemsInEditMode.includes(item.id)) {
-                    displayItem = <ItemEditMode
-                        key={item.id}
-                        {...item}
-                    />
-                }
-
-                return displayItem;
-            })
-
+        
         if (!this.props.itemsList) return <div></div>;
 
         return (
             <div className="rect-outer">
                 <div className="rect-inner">
 
-                    <ul>
-                        {items}
-                    </ul>
+
+                    <TransitionGroup
+                        component="ul"
+                        className="list"
+                    >
+                        {
+                            this.props.itemsList.map( (item, index) => (
+                                <Transition
+                                    key={ item.id }
+                                    timeout={ 500 }
+                                    mountOnEnter
+                                    unmountOnExit
+                                >
+                                    {
+                                        ( status ) => {
+                                            return <Item
+                                                status={ status }
+                                                num={ item.id }
+                                                {...item}
+                                                position={gridConfig[index]}
+                                                data-tip
+                                                data-for="sadFace"
+                                            />;
+                                        }
+                                    }
+                                </Transition>
+                            ) )
+                        }
+                    </TransitionGroup>
+
                 </div>
             </div>
         )
@@ -93,6 +100,6 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        {collection: 'post_list', orderBy: ['date', 'asc'], limit: 10}
+        {collection: 'post_list', orderBy: ['date', 'asc']}
     ])
 )(ItemsList)

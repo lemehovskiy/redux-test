@@ -24,11 +24,11 @@ class AddNewPost extends Component {
 
         this.props.addPost(this.state);
 
-        for (let i = 0; i < 1900; i++){
-            this.props.addPost({
-                title:  Math.floor(Math.random() * 2000) + 1,
-            });
-        }
+        // for (let i = 0; i < 1900; i++){
+        //     this.props.addPost({
+        //         title:  Math.floor(Math.random() * 2000) + 1,
+        //     });
+        // }
     }
 
 
